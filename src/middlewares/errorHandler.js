@@ -7,7 +7,7 @@ import { UNKNOWN_ENDPOINT, UNKNOWN_ERROR } from '../constants/error';
  *
  * @return {function} Koa middleware.
  */
-function errorHandler() {
+const errorHandler = () => {
   return async (ctx, next) => {
     try {
       await next();
@@ -22,6 +22,6 @@ function errorHandler() {
       ctx.app.emit('error', err, ctx);
     }
   };
-}
+};
 
 export default errorHandler;

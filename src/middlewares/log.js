@@ -37,7 +37,7 @@ function resSerializer(ctx = {}) {
  * @param {Object} options.logger - Logger instance of bunyan.
  * @return {function} Koa middleware.
  */
-function log(options = {}) {
+const log = (options = {}) => {
   const { logger = null } = options;
 
   if (typeof logger !== 'object' || logger === null) { throw new TypeError('Logger required'); }
@@ -72,6 +72,6 @@ function log(options = {}) {
       `Request successfully completed for id: ${ctx.reqId}`
     );
   };
-}
+};
 
 export default log;

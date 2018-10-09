@@ -29,7 +29,7 @@ const getApiInfo = (ctx) => {
     data,
     message: 'Hello, API!'
   });
-}
+};
 
 /**
  * @swagger

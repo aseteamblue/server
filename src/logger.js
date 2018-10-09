@@ -1,5 +1,3 @@
-'use strict';
-
 import { stdSerializers, createLogger } from 'bunyan';
 import config from './config/logger';
 
