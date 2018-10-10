@@ -10,6 +10,9 @@ import requestId from './middlewares/requestId';
 import responseHandler from './middlewares/responseHandler';
 import router from './routes';
 import config from './config';
+import dbconfig from './config/mongoose'
+
+import mongodb from './middlewares/mongodb';
 
 const app = new Koa();
 
@@ -45,6 +48,15 @@ function onError(err, ctx) {
 
 // Handle uncaught errors
 app.on('error', onError);
+
+// Database configuration
+app.use(mongodb({
+  user: dbconfig.dbuser,
+  pass: dbconfig.dbpassword,
+  host: dbconfig.dbhost,
+  port: dbconfig.dbport,
+  db: dbconfig.db
+}));
 
 // Start server
 if (!module.parent) {
