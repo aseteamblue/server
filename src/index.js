@@ -10,7 +10,7 @@ import requestId from './middlewares/requestId';
 import responseHandler from './middlewares/responseHandler';
 import router from './routes';
 import config from './config';
-import dbconfig from './config/mongoose'
+import dbconfig from './config/mongoose';
 
 import mongodb from './middlewares/mongodb';
 
@@ -42,8 +42,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 function onError(err, ctx) {
-  if (ctx == null)
-    logger.error({ err, event: 'error' }, 'Unhandled exception occured');
+  if (ctx == null) { logger.error({ err, event: 'error' }, 'Unhandled exception occured'); }
 }
 
 // Handle uncaught errors
