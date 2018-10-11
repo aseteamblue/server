@@ -21,9 +21,7 @@ Thingy.path('message_type').set((value) => {
     case 'ef680203-9b35-4933-9b10-52ffa9740042':
       return 'humidity';
     case 'ef680204-9b35-4933-9b10-52ffa9740042':
-      return 'gas_eco2';
-    case 'ef680204-9b35-4933-9b10-52ffa9740042':
-      return 'gas_tvoc';
+      return 'gas';
     case 'ef680205-9b35-4933-9b10-52ffa9740042':
       return 'light';
     case 'ef680302-9b35-4933-9b10-52ffa9740042':
