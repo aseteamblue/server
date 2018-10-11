@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 /**
  * HTTP Status codes
  */
