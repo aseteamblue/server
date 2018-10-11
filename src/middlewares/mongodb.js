@@ -7,9 +7,9 @@ import logger from '../logger';
  * @param {Object} [options={}] - Optional configuration.
  * @param {string} [options.user] - Username for the database.
  * @param {string} [options.pass] - Password for the database.
- * @param {function} [options.host] - Hostname of the mongodb server.
- * @param {function} [options.port] - Port for the connection.
- * @param {function} [options.db] - The database on witch we want to connect.
+ * @param {string} [options.host] - Hostname of the mongodb server.
+ * @param {string} [options.port] - Port for the connection.
+ * @param {string} [options.db] - The database on witch we want to connect.
  * @return {function} Koa middleware.
  */
 

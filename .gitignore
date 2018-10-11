@@ -72,3 +72,6 @@ typings/
 
 # Serverless directories
 .serverless
+
+# VS Code
+.vscode
