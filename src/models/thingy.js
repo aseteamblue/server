@@ -16,6 +16,20 @@ Thingy.path('message_type').set((value) => {
   switch(type) {
     case 'ef680201-9b35-4933-9b10-52ffa9740042':
       return 'temperature';
+    case 'ef680202-9b35-4933-9b10-52ffa9740042':
+      return 'pressure';
+    case 'ef680203-9b35-4933-9b10-52ffa9740042':
+      return 'humidity';
+    case 'ef680204-9b35-4933-9b10-52ffa9740042':
+      return 'gas_eco2';
+    case 'ef680204-9b35-4933-9b10-52ffa9740042':
+      return 'gas_tvoc';
+    case 'ef680205-9b35-4933-9b10-52ffa9740042':
+      return 'light';
+    case 'ef680302-9b35-4933-9b10-52ffa9740042':
+      return 'button';
+    case 'ef68040a-9b35-4933-9b10-52ffa9740042':
+      return 'gravity_vector';
     default:
       return 'NotAValideType';
   }
