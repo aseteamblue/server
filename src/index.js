@@ -11,8 +11,8 @@ import responseHandler from './middlewares/responseHandler';
 import router from './routes';
 import config from './config';
 import dbconfig from './config/mongoose';
-
 import mongodb from './middlewares/mongodb';
+import mqttclient from './services/mqttclient'
 
 const app = new Koa();
 
@@ -56,6 +56,9 @@ app.use(mongodb({
   port: dbconfig.dbport,
   db: dbconfig.db
 }));
+
+// MQTT
+app.use(mqttclient());
 
 // Start server
 if (!module.parent) {
