@@ -50,6 +50,11 @@ const mqttclient = () =>{
       let value = (message[0] === 0x00) ? 'released' : 'pressed';
       logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> Button ' + value);
     }
+
+    // GPS position
+    else if(topic.toString().includes("gps")){
+      logger.info({event:'mqtt'}, 'Position:'+ message);
+    }
   });
 
   return async (ctx, next) => {
