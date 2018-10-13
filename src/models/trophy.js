@@ -9,6 +9,4 @@ const Trophy = new Schema({
   'challenge': { type: Number },
 });
 
-
-const model = mongoose.model('Trophy', Trophy);
-export default model;
+export default Trophy;

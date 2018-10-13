@@ -36,5 +36,4 @@ Thingy.path('message_type').set((value) => {
   }
 });
 
-const model = mongoose.model('Thingy', Thingy);
-export default model;
+export default Thingy;
