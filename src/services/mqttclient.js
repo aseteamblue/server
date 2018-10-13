@@ -5,7 +5,7 @@ import config from '../config/mqtt.js';
 import logger from '../logger';
 import thingy from '../config/thingy.js';
 
-const mqttclient = () => {
+const mqttclient = () =>{
   // Connect to the MQTT broker
   const client = mqtt.connect(config.wsshost, { username: config.mqttuser, password: config.mqttpassword });
 
@@ -47,7 +47,7 @@ const mqttclient = () => {
 
     // button
     else if(topic.toString().includes(thingy.characteristics.button.characteristicUUID)) {
-      let value = (message[0] == 0x00) ? 'released' : 'pressed';
+      let value = (message[0] === 0x00) ? 'released' : 'pressed';
       logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> Button ' + value);
     }
   });

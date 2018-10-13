@@ -73,10 +73,7 @@ typings/
 # Serverless directories
 .serverless
 
-<<<<<<< HEAD
 # VS Code
 .vscode
-=======
 # macOS generated files #
 .DS_Store
->>>>>>> dev

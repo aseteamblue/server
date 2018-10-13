@@ -3,6 +3,9 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
+/*
+* This shema is use to store the message receive from the mqtt borker
+*/
 const Thingy = new Schema({
   'device_id': { type: String },
   'message_type': { type: String },
