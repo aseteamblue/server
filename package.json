@@ -8,6 +8,7 @@
     "build": "npm run clean && babel src -d build",
     "start": "node build/index.js",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/index.js | bunyan",
+    "devWindows": "SET NODE_ENV=development&& babel-node src/index.js | bunyan",
     "lint": "eslint src"
   },
   "repository": {
