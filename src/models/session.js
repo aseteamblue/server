@@ -12,6 +12,4 @@ const Session = new Schema({
   'duration': { type: Number },
 });
 
-
-const model = mongoose.model('Session', Session);
-export default model;
+export default Session;
