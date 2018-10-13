@@ -12,7 +12,7 @@ import router from './routes';
 import config from './config';
 import dbconfig from './config/mongoose';
 import mongodb from './middlewares/mongodb';
-import mqttclient from './services/mqttclient'
+import mqttclient from './services/mqttclient';
 
 const app = new Koa();
 
