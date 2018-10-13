@@ -57,11 +57,6 @@ const mqttclient = () =>{
         logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> GPS: ' + value.latitude + ', ' + value.longitude);
       }
     }
-
-    // GPS position
-    else if(topic.toString().includes("gps")){
-      logger.info({event:'mqtt'}, 'Position:'+ message);
-    }
   });
 
   return async (ctx, next) => {
