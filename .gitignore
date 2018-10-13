@@ -75,6 +75,5 @@ typings/
 
 # VS Code
 .vscode
-
 # macOS generated files #
 .DS_Store
