@@ -10,7 +10,7 @@ let Thingy = Mongoose.model('Thingy');
 class dataManager {
   static async addRaw(thingyId, characteristic, value) {
     let msg = new Thingy({ device_id: thingyId, message_type: characteristic, data: value });
-    await msg.save().exec();
+    msg.save();
     return 0;
   }
 }
