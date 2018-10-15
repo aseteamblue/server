@@ -31,9 +31,13 @@ Thingy.path('message_type').set((value) => {
       return 'button';
     case 'ef68040a-9b35-4933-9b10-52ffa9740042':
       return 'gravity_vector';
+    case 'gps':
+      return 'gps';
     default:
       return 'NotAValideType';
   }
 });
+
+global.thingySchema = global.thingySchema || mongoose.model('Thingy', Thingy);
 
 export default Thingy;

@@ -9,4 +9,6 @@ const Trophy = new Schema({
   'challenge': { type: Number },
 });
 
+global.trophySchema = global.trophySchema || mongoose.model('Trophy', Trophy);
+
 export default Trophy;
