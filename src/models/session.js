@@ -12,4 +12,9 @@ const Session = new Schema({
   'duration': { type: Number },
 });
 
+<<<<<<< HEAD
+=======
+global.sessionSchema = global.sessionSchema || mongoose.model('Session', Session);
+
+>>>>>>> mongodb
 export default Session;

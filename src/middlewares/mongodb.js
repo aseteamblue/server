@@ -19,6 +19,7 @@ import thingy from '../models/thingy';
  */
 
 const mongodb = (options = {})  => {
+  
   let mongoUrl = `mongodb://${options.user}:${options.pass}@${options.host}:${options.port}/${options.db}`;
   let mongoOptions =
     {
