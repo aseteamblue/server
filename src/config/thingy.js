@@ -112,7 +112,6 @@ const config =
       'unit': ''
     },
 
-
     // NOTIFY
     // 8 bytes
     // uint32_t: steps, uint32_t: time [ms]
