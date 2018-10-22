@@ -12,7 +12,7 @@ const configs = {
     port: 7070
   },
   production: {
-    port: process.env.APP_PORT || 7071
+    port: process.env.PORT || 80
   },
   development: {
   },
