@@ -21,4 +21,6 @@ heroku git:remote -a server-thingy
 And when you want to push to heroku:
 ```
 git push heroku master
+or to use dev branch :
+git push heroku dev:master
 ```
