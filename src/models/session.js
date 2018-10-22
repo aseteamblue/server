@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const Session = new Schema({
+const SessionSchema = new Schema({
   'title': { type: String },
   'type': { type: Boolean },
   'share': { type: Boolean },
@@ -12,4 +12,6 @@ const Session = new Schema({
   'duration': { type: Number },
 });
 
-export default Session;
+global.SessionSchema = global.SessionSchema || mongoose.model('Session', SessionSchema);
+
+export default SessionSchema;

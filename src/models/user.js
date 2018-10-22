@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const User = new Schema({
+const UserSchema = new Schema({
   'thingyUri': { type: String },
   'lastName': { type: String },
   'firstName': { type: String },
@@ -18,4 +18,6 @@ const User = new Schema({
 
 });
 
-export default User;
+global.UserSchema = global.UserSchema || mongoose.model('User', UserSchema);
+
+export default UserSchema;
