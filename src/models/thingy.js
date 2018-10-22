@@ -38,9 +38,4 @@ Thingy.path('message_type').set((value) => {
   }
 });
 
-<<<<<<< HEAD
-=======
-global.thingySchema = global.thingySchema || mongoose.model('Thingy', Thingy);
-
->>>>>>> mongodb
 export default Thingy;
