@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 /*
 * This shema is use to store the message receive from the mqtt borker
 */
-const Thingy = new Schema({
+const ThingySchema = new Schema({
   'device_id': { type: String },
   'message_type': { type: String },
   'data': { type: String },
@@ -14,7 +14,7 @@ const Thingy = new Schema({
 
 });
 
-Thingy.path('message_type').set((value) => {
+ThingySchema.path('message_type').set((value) => {
   const type = value.toString();
   switch(type) {
     case 'ef680201-9b35-4933-9b10-52ffa9740042':
@@ -38,4 +38,6 @@ Thingy.path('message_type').set((value) => {
   }
 });
 
-export default Thingy;
+global.ThingySchema = global.ThingySchema || mongoose.model('Thingy', ThingySchema);
+
+export default ThingySchema;

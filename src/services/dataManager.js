@@ -1,11 +1,5 @@
-'use strict';
+import Thingy from '../models/thingy';
 
-import Mongoose from 'mongoose';
-
-// Import the db models for interacting with the database
-// let User = Mongoose.model('User');
-let Thingy = Mongoose.model('Thingy');
-// let Session = Mongoose.model('Session');
 
 class dataManager {
   static async addRaw(thingyId, characteristic, value) {

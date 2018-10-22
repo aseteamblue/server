@@ -19,7 +19,7 @@ import thingy from '../models/thingy';
  */
 
 const mongodb = (options = {})  => {
-  
+
   let mongoUrl = `mongodb://${options.user}:${options.pass}@${options.host}:${options.port}/${options.db}`;
   let mongoOptions =
     {
@@ -55,10 +55,10 @@ const mongodb = (options = {})  => {
     logger.info({ event: 'execute' }, 'MongoDB connected!');
 
     // Create the models after connection to the databas
-    mongoose.model('User', user);
+    /* mongoose.model('User', user);
     mongoose.model('Session', session);
     mongoose.model('Trophy', trophy);
-    mongoose.model('Thingy', thingy);
+    mongoose.model('Thingy', thingy); */
   });
 
   db.on('open', ()=>{
