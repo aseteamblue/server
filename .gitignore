@@ -72,3 +72,8 @@ typings/
 
 # Serverless directories
 .serverless
+
+# VS Code
+.vscode
+# macOS generated files #
+.DS_Store

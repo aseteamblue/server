@@ -1,0 +1,3 @@
+To see the schema of the database:
+1) Go on: https://www.draw.io/
+2) Import the database_diagram file
