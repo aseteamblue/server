@@ -2,6 +2,8 @@ import Koa from 'koa';
 
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
+import session from 'koa-session';
+import passport from 'koa-passport';
 
 import errorHandler from './middlewares/errorHandler';
 import logMiddleware from './middlewares/log';
@@ -13,10 +15,14 @@ import config from './config';
 import dbconfig from './config/mongoose';
 import mongodb from './middlewares/mongodb';
 import mqttclient from './services/mqttclient';
+import './services/auth';
 
 const app = new Koa();
 
 app.proxy = true;
+
+app.keys = ['super-secret-key'];
+app.use(session(app));
 
 app.use(
   bodyParser({
@@ -25,6 +31,10 @@ app.use(
     jsonLimit: '10mb'
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(requestId());
 app.use(
   cors({

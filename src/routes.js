@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 
 import HomeController from './controllers/home';
+import AuthController from './controllers/auth';
 
 
 const router = new Router();
@@ -19,5 +20,8 @@ router.get('/sessions/:sessionID/gps/', '');
 router.get('/sessions/:sessionID/averageValues/', '');
 router.get('/trophies/', '');
 router.get('/trophies/:trophyID', '');
+
+router.post('/auth/login', AuthController.login);
+
 
 export default router;
