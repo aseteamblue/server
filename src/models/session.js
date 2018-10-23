@@ -9,7 +9,14 @@ const SessionSchema = new Schema({
   'share': { type: Boolean },
   'totalDistance': { type: Number },
   'averageSpeed': { type: Number },
+  'averageTemperature': { type: Number },
+  'averageHumidity': { type: Number },
+  'averageECO2': { type: Number },
+  'averageTVOC': { type: Number },
   'duration': { type: Number },
+  'dateStart': { type: Date },
+  'dateEnd': { type: Date },
+  'active': { type: Boolean }
 });
 
 global.SessionSchema = global.SessionSchema || mongoose.model('Session', SessionSchema);

@@ -8,6 +8,7 @@ const Schema = mongoose.Schema;
 */
 const ThingySchema = new Schema({
   'device_id': { type: String },
+  'session_id': { type: Schema.Types.ObjectId, ref: 'Session' },
   'message_type': { type: String },
   'data': { type: String },
   'date': { type: Date, default: Date.now },
