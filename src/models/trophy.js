@@ -11,4 +11,4 @@ const TrophySchema = new Schema({
 
 global.TrophySchema = global.TrophySchema || mongoose.model('Trophy', TrophySchema);
 
-export default TrophySchema;
+export default global.TrophySchema;

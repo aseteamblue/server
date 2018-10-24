@@ -44,7 +44,7 @@ app.use(
   })
 );
 
-app.use(responseHandler());
+// app.use(responseHandler());
 app.use(errorHandler());
 app.use(logMiddleware({ logger }));
 

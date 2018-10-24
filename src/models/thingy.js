@@ -40,4 +40,4 @@ ThingySchema.path('message_type').set((value) => {
 
 global.ThingySchema = global.ThingySchema || mongoose.model('Thingy', ThingySchema);
 
-export default ThingySchema;
+export default global.ThingySchema;

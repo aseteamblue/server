@@ -14,4 +14,4 @@ const SessionSchema = new Schema({
 
 global.SessionSchema = global.SessionSchema || mongoose.model('Session', SessionSchema);
 
-export default SessionSchema;
+export default global.SessionSchema;
