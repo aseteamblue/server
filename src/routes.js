@@ -1,11 +1,12 @@
 import Router from 'koa-router';
-
+import passport from 'koa-passport';
 import HomeController from './controllers/home';
 import AuthController from './controllers/auth';
 
+const requireAuth = passport.authenticate('jwt', {session: false });
 
 const router = new Router();
-router.get('/', HomeController.getApiInfo);
+router.get('/', requireAuth, HomeController.getApiInfo);
 router.get('/spec', HomeController.getSwaggerSpec);
 router.get('/users/');
 router.get('/users/:userID', '');

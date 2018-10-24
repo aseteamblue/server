@@ -21,7 +21,7 @@ const app = new Koa();
 
 app.proxy = true;
 
-app.keys = ['super-secret-key'];
+app.keys = ['thebestkey'];
 app.use(session(app));
 
 app.use(
@@ -33,7 +33,6 @@ app.use(
 );
 
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(requestId());
 app.use(
