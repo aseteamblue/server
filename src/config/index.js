@@ -9,7 +9,8 @@ const configs = {
     env,
     name: process.env.APP_NAME || 'TeamBlue',
     host: process.env.APP_HOST || '0.0.0.0',
-    port: 7070
+    port: 7070,
+    jwt_secret: 'emf123'
   },
   production: {
     port: process.env.PORT || 80
