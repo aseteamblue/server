@@ -54,7 +54,6 @@ const register = async (ctx) => {
         return;
       }
       const pass = generatePassword('emf123');
-      console.log(pass);
       const newUser = new User();
       newUser.username = params.username;
       newUser.password = pass;
