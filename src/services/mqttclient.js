@@ -37,14 +37,16 @@ const mqttclient = () =>{
 
       // test if a session exist with the thingy
       if(!receive.get(thingyURI) && value === 'pressed') {
-        let sessionID = data.newSession();
-        sessions.set(thingyURI, sessionID);
+        data.startSession(sessions, thingyURI);
+      }else if(receive.get(thingyURI) && value === 'pressed') {
+        data.stopSession(sessions.get(thingyURI));
+        sessions.set(thingyURI, null);
       }
 
       if (message[0] === 0x0) { receive.set(thingyURI, !receive.get(thingyURI)); }
     }
 
-    if(receive.get(thingyURI)) {
+    if(receive.get(thingyURI) && sessions.get(thingyURI) !== null) {
       let sessionID = sessions.get(thingyURI);
       if(topic.toString().includes(thingy.characteristics.temperature.characteristicUUID)) {
         // temperature
