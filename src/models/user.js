@@ -9,12 +9,13 @@ const UserSchema = new Schema({
   'firstName': { type: String },
   'address': { type: String },
   'username': { type: String },
+  'password': { type: String },
   'totalDistanceJogging': { type: Number },
   'totalDistanceBicycle': { type: Number },
   'totalDistance': { type: Number },
   'totalTime': { type: Number },
-  'session': [{ type: Schema.Types.ObjectId, ref: 'Session' }],
-  'trophies': [{ type: Schema.Types.ObjectId, ref: 'Trophy' }]
+  'session': [{ type: String }],
+  'trophies': [{ type: String }]
 
 });
 
