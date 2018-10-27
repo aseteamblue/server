@@ -23,7 +23,7 @@ class dataManager {
         if(session.length !== 1) {
           logger.info({ event: 'datamanager' }, 'Thingy ' + thingyId + ' -> create a new session');
           let id = await this.createSession();
-          user.session += id;
+          user.session.push(id);
           sessionList.set(thingyId, id);
           user.save();
         }else {
@@ -33,7 +33,7 @@ class dataManager {
       }else {
         logger.info({ event: 'datamanager' }, 'Thingy ' + thingyId + ' -> create the first session');
         let id = await this.createSession();
-        user.session += id;
+        user.session.push(id);
         sessionList.set(thingyId, id);
         user.save();
       }
