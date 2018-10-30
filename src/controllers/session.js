@@ -94,3 +94,13 @@ const getSessionAverageValues = async (ctx) => {
     }
   });
 };
+
+export default{
+  getSessions,
+  getSessionByID,
+  getSessionTemperatures,
+  getSessionHumidities,
+  getSessionCO2,
+  getSessionGPS,
+  getSessionAverageValues
+};

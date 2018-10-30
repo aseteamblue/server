@@ -57,6 +57,9 @@ const register = async (ctx) => {
       const newUser = new User();
       newUser.username = params.username;
       newUser.password = pass;
+      if(params.thingy != null) {
+        newUser.thingyUri = params.thingy;
+      }
       return newUser.save()
         .then((user) => {
           const token = issue({ id: newUser.id });

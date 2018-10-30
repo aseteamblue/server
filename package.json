@@ -43,7 +43,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "swagger-jsdoc": "^3.2.3",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "zenio": "0.0.8"
   },
   "devDependencies": {
     "eslint": "^5.6.1",

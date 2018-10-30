@@ -5,6 +5,7 @@ import AuthController from './controllers/auth';
 import UserController from './controllers/user';
 import SessionController from './controllers/session';
 import TrophyController from './controllers/trophy';
+import RestController from './controllers/reset';
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
@@ -26,5 +27,6 @@ router.get('/trophies/', TrophyController.getTrophies);
 router.get('/trophies/:trophyID', TrophyController.getTrophyByID);
 router.post('/auth/login', AuthController.login);
 router.get('/auth/register', AuthController.register);
+router.get('/reset', RestController.reset);
 
 export default router;

@@ -66,3 +66,10 @@ const getUserTrophies = async (ctx) => {
       ctx.status = 200;
     });
 };
+
+export default {
+  getUsers,
+  getUserByID,
+  getUserSessions,
+  getUserTrophies
+};

@@ -27,3 +27,8 @@ const getTrophyByID = async (ctx) => {
     }
   });
 };
+
+export default{
+  getTrophies,
+  getTrophyByID
+};
