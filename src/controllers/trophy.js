@@ -1,16 +1,38 @@
 'use strict';
 import Trophy from '../models/trophy';
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get all the trophies from the database.
+ *     operationId: getTrophies
+ *     responses:
+ *       200:
+ *         description: List of trophies.
+ */
 const getTrophies = async (ctx) => {
-  await Trophy.find({}, (err, res) => {
-    if (err) { throw err; }
-    if (res) {
-      ctx.body = res;
-      ctx.status = 200;
-    }
-  });
+  let trophies = await Trophy.find({});
+  if (trophies) {
+    ctx.body = trophies;
+    ctx.status = 200;
+  }
 };
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get a trophy corresponding to a given ID.
+ *     operationId: getTrophy
+ *     responses:
+ *       200:
+ *         description: Trophy.
+ */
 const getTrophyByID = async (ctx) => {
   const trophyID = ctx.params.trophyID;
   if (trophyID == null) {
@@ -19,13 +41,11 @@ const getTrophyByID = async (ctx) => {
     };
     ctx.status = 400;
   }
-  await Trophy.findOne({ _id: trophyID }, (err, res) => {
-    if (err) { throw err; }
-    if (res) {
-      ctx.body = res;
-      ctx.status = 200;
-    }
-  });
+  let trophy = await Trophy.findOne({ _id: trophyID });
+  if (trophy) {
+    ctx.body = trophy;
+    ctx.status = 200;
+  }
 };
 
 export default{

@@ -3,16 +3,38 @@ import User from '../models/user';
 import Session from '../models/session';
 import Trophy from '../models/trophy';
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get all the users from the database.
+ *     operationId: getUsers
+ *     responses:
+ *       200:
+ *         description: List of users.
+ */
 const getUsers = async (ctx) => {
-  await User.find({}, (err, res) => {
-    if (err) { throw err; }
-    if (res) {
-      ctx.body = res;
-      ctx.status = 200;
-    }
-  });
+  let users = await User.find({});
+  if (users) {
+    ctx.body = users;
+    ctx.status = 200;
+  }
 };
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get the user corresponding to the given ID.
+ *     operationId: getUser
+ *     responses:
+ *       200:
+ *         description: User.
+ */
 const getUserByID = async (ctx) => {
   const userID = ctx.params.userID;
   if (userID == null) {
@@ -21,15 +43,25 @@ const getUserByID = async (ctx) => {
     };
     ctx.status = 400;
   }
-  await User.findOne({ _id: userID }, (err, res) => {
-    if (err) { throw err; }
-    if (res) {
-      ctx.body = res;
-      ctx.status = 200;
-    }
-  });
+  let user = await User.findOne({ _id: userID });
+  if (user) {
+    ctx.body = user;
+    ctx.status = 200;
+  }
 };
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get the sessions corresponding to a specific user.
+ *     operationId: getUserSessions
+ *     responses:
+ *       200:
+ *         description: List of sessions.
+ */
 const getUserSessions = async (ctx) => {
   const userID = ctx.params.userID;
   if (userID == null) {
@@ -48,6 +80,18 @@ const getUserSessions = async (ctx) => {
     });
 };
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get the trophies earned by a specific user.
+ *     operationId: getUserTrophies
+ *     responses:
+ *       200:
+ *         description: List of trophies.
+ */
 const getUserTrophies = async (ctx) => {
   const userID = ctx.params.userID;
   if (userID == null) {
@@ -58,8 +102,7 @@ const getUserTrophies = async (ctx) => {
   }
   await User.findOne({ _id: userID })
     .then((user) => {
-      // TODO
-      return Trophy.find({ trophies: user.trophies });
+      return Trophy.find({ _id: user.trophies });
     })
     .then((res) => {
       ctx.body = res;
