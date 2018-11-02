@@ -20,7 +20,7 @@ const reset = async (ctx) => {
   await global.ThingySchema.deleteMany({});
   await global.SessionSchema.deleteMany({});
   await global.TrophySchema.deleteMany({});
-  for(let i = 1; i <= 4; i++) {
+  for(let i = 1; i <= 3; i++) {
     await zenio.get(`${config.host}:${config.port}/auth/register?username=test${i}&thingy=blue0${i}`);
   }
 

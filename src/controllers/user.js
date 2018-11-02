@@ -1,6 +1,5 @@
 'use strict';
 import User from '../models/user';
-import Session from '../models/session';
 import Trophy from '../models/trophy';
 
 /**
@@ -72,7 +71,7 @@ const getUserSessions = async (ctx) => {
   }
   await User.findOne({ _id: userID })
     .then((user) => {
-      return Session.find({ session: user.session });
+      return user.session;
     })
     .then((res) => {
       ctx.body = res;
