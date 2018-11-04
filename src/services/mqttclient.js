@@ -63,7 +63,7 @@ const mqttclient = () =>{
         // humidity
         let value = message[0];
         logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> Humidity: ' + value + thingy.characteristics.humidity.unit);
-        data.addRaw(thingyURI, thingy.characteristics.humidity.characteristicUUID, value);
+        data.addRaw(thingyURI, sessionID, thingy.characteristics.humidity.characteristicUUID, value);
       } else if(topic.toString().includes(thingy.characteristics.gaseco2.characteristicUUID)) {
         // gas
         let eco2 = parseInt(message[1].toString(2) + message[0].toString(2), 2);
