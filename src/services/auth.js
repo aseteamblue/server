@@ -57,7 +57,7 @@ passport.use(new JWTStrategy(
         return done(err, false);
       }
       if (user) {
-        return done(null, { user });
+        return done(null, user);
       }
       return false;
     });

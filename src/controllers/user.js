@@ -35,13 +35,7 @@ const getUsers = async (ctx) => {
  *         description: User.
  */
 const getUserByID = async (ctx) => {
-  const userID = ctx.params.userID;
-  if (userID == null) {
-    ctx.body = {
-      msg: 'No field userID'
-    };
-    ctx.status = 400;
-  }
+  const userID = ctx.req.user.id;
   let user = await User.findOne({ _id: userID });
   if (user) {
     ctx.body = user;
@@ -62,13 +56,7 @@ const getUserByID = async (ctx) => {
  *         description: List of sessions.
  */
 const getUserSessions = async (ctx) => {
-  const userID = ctx.params.userID;
-  if (userID == null) {
-    ctx.body = {
-      msg: 'No field userID'
-    };
-    ctx.status = 400;
-  }
+  const userID = ctx.req.user.id;
   await User.findOne({ _id: userID })
     .then((user) => {
       return user.session;
@@ -92,13 +80,7 @@ const getUserSessions = async (ctx) => {
  *         description: List of trophies.
  */
 const getUserTrophies = async (ctx) => {
-  const userID = ctx.params.userID;
-  if (userID == null) {
-    ctx.body = {
-      msg: 'No field userID'
-    };
-    ctx.status = 400;
-  }
+  const userID = ctx.req.user.id;
   await User.findOne({ _id: userID })
     .then((user) => {
       return Trophy.find({ _id: user.trophies });
