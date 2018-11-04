@@ -1,26 +1,22 @@
-'use strict';
-
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const User = new Schema({
+const UserSchema = new Schema({
   'thingyUri': { type: String },
   'lastName': { type: String },
   'firstName': { type: String },
   'address': { type: String },
   'username': { type: String },
+  'password': { type: String },
   'totalDistanceJogging': { type: Number },
   'totalDistanceBicycle': { type: Number },
   'totalDistance': { type: Number },
   'totalTime': { type: Number },
-  'session': [{ type: Schema.Types.ObjectId, ref: 'Session' }],
-  'trophies': [{ type: Schema.Types.ObjectId, ref: 'Trophy' }]
+  'session': [{ type: String }],
+  'trophies': [{ type: String }]
 
 });
 
-<<<<<<< HEAD
-=======
-global.userSchema = global.userSchema || mongoose.model('User', User);
+global.UserSchema = global.UserSchema || mongoose.model('User', UserSchema);
 
->>>>>>> mongodb
-export default User;
+export default global.UserSchema;

@@ -3,15 +3,12 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const Trophy = new Schema({
+const TrophySchema = new Schema({
   'type': { type: Boolean },
   'description': { type: String },
   'challenge': { type: Number },
 });
 
-<<<<<<< HEAD
-=======
-global.trophySchema = global.trophySchema || mongoose.model('Trophy', Trophy);
+global.TrophySchema = global.TrophySchema || mongoose.model('Trophy', TrophySchema);
 
->>>>>>> mongodb
-export default Trophy;
+export default global.TrophySchema;
