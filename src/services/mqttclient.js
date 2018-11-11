@@ -88,7 +88,7 @@ const mqttclient = () =>{
         // GPS
         let value = JSON.parse(message);
         logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> GPS: ' + value.latitude + ', ' + value.longitude);
-        data.addRaw(thingyURI, sessionID, 'gps', value.latitude + '/' + value.longitude);
+        data.addRaw(thingyURI, sessionID, 'gps', { 'latitude': value.latitude, 'longitute': value.longitude });
       }
     }
   });
