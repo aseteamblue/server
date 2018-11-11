@@ -18,7 +18,7 @@ class dataManager {
   static async startSession(sessionList, thingyId) {
     let user = await global.UserSchema.findOne({ thingyUri: thingyId }).exec();
     if(user) {
-      let session = await global.SessionSchema.find({ id: { $in: user.session }, active: true }).exec();
+      let session = await global.SessionSchema.find({ _id: { $in: user.session }, active: true }).exec();
       if(session) {
         if(session.length !== 1) {
           logger.info({ event: 'datamanager' }, 'Thingy ' + thingyId + ' -> create a new session');
@@ -41,14 +41,14 @@ class dataManager {
   }
 
   static async createSession() {
-    let newSession = new global.SessionSchema({ id: mongoose.Types.ObjectId().toHexString(), active: true, dateStart: new Date() });
+    let newSession = new global.SessionSchema({ _id: mongoose.Types.ObjectId(), active: true, dateStart: new Date() });
     newSession.save();
-    return newSession.id;
+    return newSession._id;
   }
 
   static async stopSession(sessionId) {
     logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' finished');
-    let session = await global.SessionSchema.findOne({ id: sessionId }).exec();
+    let session = await global.SessionSchema.findOne({ _id: sessionId }).exec();
     if(session) {
       session.active = false;
       session.dateEnd = Date.now();

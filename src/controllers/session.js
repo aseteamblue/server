@@ -18,7 +18,7 @@ import User from '../models/user';
  */
 const getSessions = async (ctx) => {
   let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
-  let sessions = await Session.find({ $or: [{ id: { $in: userSessions.session } }, { share: true }] });
+  let sessions = await Session.find({ $or: [{ _id: { $in: userSessions.session } }, { share: true }] });
   if(sessions) {
     ctx.body = sessions;
     ctx.status = 200;
@@ -51,7 +51,7 @@ const getSessionByID = async (ctx) => {
   let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
   if(userSessions.session.includes(sessionID)) {
     // user accesses one of his sessions
-    let sessions = await Session.findOne({ id: sessionID });
+    let sessions = await Session.findOne({ _id: sessionID });
     if(sessions) {
       ctx.body = sessions;
       ctx.status = 200;
@@ -61,7 +61,7 @@ const getSessionByID = async (ctx) => {
     }
   } else {
     // user accesses a public session: id = sessionID, share has to be true
-    let sessions = await Session.findOne({ id: sessionID, share: true });
+    let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       ctx.body = sessions;
       ctx.status = 200;
@@ -105,7 +105,7 @@ const getSessionTemperatures = async (ctx) => {
     }
   } else {
     // user getting temperatures for a public session
-    let sessions = await Session.findOne({ id: sessionID, share: true });
+    let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       // session is public
       let temperatures = await Thingy.find({ session_id: sessionID, message_type: configThingy.characteristics.temperature.characteristicUUID });
@@ -157,7 +157,7 @@ const getSessionHumidities = async (ctx) => {
     }
   } else {
     // user getting humidities for a public session
-    let sessions = await Session.findOne({ id: sessionID, share: true });
+    let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       // session is public
       let humidities = await Thingy.find({ session_id: sessionID, message_type: configThingy.characteristics.humidity.characteristicUUID });
@@ -209,7 +209,7 @@ const getSessionCO2 = async (ctx) => {
     }
   } else {
     // user getting gas for a public session
-    let sessions = await Session.findOne({ id: sessionID, share: true });
+    let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       // session is public
       let gas = await Thingy.find({ session_id: sessionID, message_type: configThingy.characteristics.gaseco2.characteristicUUID });
@@ -261,7 +261,7 @@ const getSessionGPS = async (ctx) => {
     }
   } else {
     // user getting gps for a public session
-    let sessions = await Session.findOne({ id: sessionID, share: true });
+    let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       // session is public
       let gps = await Thingy.find({ session_id: sessionID, message_type: 'gps' });
@@ -303,7 +303,7 @@ const getSessionAverageValues = async (ctx) => {
   let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
   if(userSessions.session.includes(sessionID)) {
     // user getting temperatures for one of his sessions
-    let res = await Session.findOne({ id: sessionID });
+    let res = await Session.findOne({ _id: sessionID });
     if (res) {
       ctx.body = {
         averageSpeed: res.averageSpeed,
@@ -319,10 +319,10 @@ const getSessionAverageValues = async (ctx) => {
     }
   } else {
     // user getting temperatures for a public session
-    let sessions = await Session.findOne({ id: sessionID, share: true });
+    let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       // session is public
-      let res = await Session.findOne({ id: sessionID });
+      let res = await Session.findOne({ _id: sessionID });
       if (res) {
         ctx.body = {
           averageSpeed: res.averageSpeed,
