@@ -251,7 +251,7 @@ const getSessionGPS = async (ctx) => {
   let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
   if(userSessions.session.includes(sessionID)) {
     // user getting gps for one of his sessions
-    let gps = await Thingy.find({ session_id: sessionID, message_type: 'gps' });
+    let gps = await Thingy.find({ session_id: sessionID, message_type: 'gps' }).sort('date');
     if (gps) {
       ctx.body = gps;
       ctx.status = 200;
@@ -264,7 +264,7 @@ const getSessionGPS = async (ctx) => {
     let sessions = await Session.findOne({ _id: sessionID, share: true });
     if(sessions) {
       // session is public
-      let gps = await Thingy.find({ session_id: sessionID, message_type: 'gps' });
+      let gps = await Thingy.find({ session_id: sessionID, message_type: 'gps' }).sort('date');
       if (gps) {
         ctx.body = gps;
         ctx.status = 200;
