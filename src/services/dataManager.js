@@ -62,10 +62,19 @@ class dataManager {
     let hum = 0;
 
     for(let i = 0; i < (gps.length - 1); i++) {
-      km = km + haversine(gps[i].data,gps[i+1].data);
+      const start = {
+        latitude: gps[i].data.lat,
+        longitude: gps[i].data.lng
+      }
+
+      const stop = {
+        latitude: gps[i+1].data.lat,
+        longitude: gps[i+1].data.lng
+      }
+      km = km + parseFloat(haversine(start,stop));
     }
 
-    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> total distance: ' + km);
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> total distance: ' + km + "km");
 
     for(let i = 0; i < (humidity.length ); i++) {
       hum = hum + parseFloat(humidity[i].data);
@@ -73,7 +82,7 @@ class dataManager {
 
     hum = hum / humidity.length;
 
-    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg humidity: ' + hum);
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg humidity: ' + hum + "%");
 
     for(let i = 0; i < (temperature.length ); i++) {
       temp = temp + parseFloat(temperature[i].data);
@@ -81,7 +90,7 @@ class dataManager {
 
     temp = temp / temperature.length;
 
-    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg temperature: ' + temp);
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg temperature: ' + temp + "°C");
 
     if(session) {
       session.averageTemperature = temp;
