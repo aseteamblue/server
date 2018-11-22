@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
+import haversine from 'haversine'
 
 import '../models/session';
 import '../models/thingy';
 import '../models/user';
 
 import logger from '../logger';
+import configThingy from '../config/thingy';
 
 class dataManager {
   static addRaw(thingyId, sessionID, characteristic, value) {
@@ -48,10 +50,46 @@ class dataManager {
 
   static async stopSession(sessionId) {
     logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' finished');
+
     let session = await global.SessionSchema.findOne({ _id: sessionId }).exec();
+
+    let gps = await global.ThingySchema.find({ session_id: sessionId, message_type: 'gps' }).sort({ date: 1 }).exec();
+    let humidity = await global.ThingySchema.find({ session_id: sessionId, message_type: configThingy.characteristics.humidity.characteristicUUID }).exec();
+    let temperature = await global.ThingySchema.find({ session_id: sessionId, message_type: configThingy.characteristics.temperature.characteristicUUID }).exec();
+
+    let km = 0;
+    let temp = 0;
+    let hum = 0;
+
+    for(let i = 0; i < (gps.length - 1); i++) {
+      km = km + haversine(gps[i].data,gps[i+1].data);
+    }
+
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> total distance: ' + km);
+
+    for(let i = 0; i < (humidity.length ); i++) {
+      hum = hum + parseFloat(humidity[i].data);
+    }
+
+    hum = hum / humidity.length;
+
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg humidity: ' + hum);
+
+    for(let i = 0; i < (temperature.length ); i++) {
+      temp = temp + parseFloat(temperature[i].data);
+    }
+
+    temp = temp / temperature.length;
+
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg temperature: ' + temp);
+
     if(session) {
+      session.averageTemperature = temp;
+      session.averageHumidity = hum;
+      session.totalDistance = km;
       session.active = false;
       session.dateEnd = Date.now();
+      session.duration = session.dateEnd.getTime() - session.dateStart.getTime();
       session.save();
     }
   }
