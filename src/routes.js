@@ -27,6 +27,7 @@ router.get('/trophies', requireAuth, TrophyController.getTrophies);
 router.get('/trophies/:trophyID', requireAuth, TrophyController.getTrophyByID);
 router.post('/auth/login', AuthController.login);
 router.get('/auth/register', AuthController.register);
+router.get('/auth/refresh', requireAuth, AuthController.refresh);
 router.get('/reset', RestController.reset);
 
 export default router;
