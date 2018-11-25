@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import haversine from 'haversine'
+import haversine from 'haversine';
 
 import '../models/session';
 import '../models/thingy';
@@ -65,32 +65,31 @@ class dataManager {
       const start = {
         latitude: gps[i].data.lat,
         longitude: gps[i].data.lng
-      }
+      };
 
       const stop = {
-        latitude: gps[i+1].data.lat,
-        longitude: gps[i+1].data.lng
+        latitude: gps[i + 1].data.lat,
+        longitude: gps[i + 1].data.lng
+      };
+      km += parseFloat(haversine(start, stop));
+    }
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> total distance: ' + km + 'km');
+
+    if(humidity.length !== 0) {
+      for(let i = 0; i < (humidity.length); i++) {
+        hum += parseFloat(humidity[i].data);
       }
-      km = km + parseFloat(haversine(start,stop));
+      hum /= humidity.length;
     }
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg humidity: ' + hum + '%');
 
-    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> total distance: ' + km + "km");
-
-    for(let i = 0; i < (humidity.length ); i++) {
-      hum = hum + parseFloat(humidity[i].data);
+    if(temperature.length !== 0) {
+      for(let i = 0; i < (temperature.length); i++) {
+        temp += parseFloat(temperature[i].data);
+      }
+      temp /= temperature.length;
     }
-
-    hum = hum / humidity.length;
-
-    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg humidity: ' + hum + "%");
-
-    for(let i = 0; i < (temperature.length ); i++) {
-      temp = temp + parseFloat(temperature[i].data);
-    }
-
-    temp = temp / temperature.length;
-
-    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg temperature: ' + temp + "°C");
+    logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' -> avg temperature: ' + temp + '°C');
 
     if(session) {
       session.averageTemperature = temp;
