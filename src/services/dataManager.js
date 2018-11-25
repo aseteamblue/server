@@ -98,6 +98,10 @@ class dataManager {
       session.active = false;
       session.dateEnd = Date.now();
       session.duration = session.dateEnd.getTime() - session.dateStart.getTime();
+
+      let hours = session.duration / (1000 * 60 * 60);
+      session.averageSpeed = km / hours;
+
       session.save();
     }
   }
