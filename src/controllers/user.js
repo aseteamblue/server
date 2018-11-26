@@ -19,6 +19,9 @@ const getUsers = async (ctx) => {
   if (users) {
     ctx.body = users;
     ctx.status = 200;
+  } else {
+    ctx.status = 404;
+    ctx.body = { status: 'error' };
   }
 };
 
@@ -40,6 +43,9 @@ const getUserByID = async (ctx) => {
   if (user) {
     ctx.body = user;
     ctx.status = 200;
+  } else {
+    ctx.status = 404;
+    ctx.body = { status: 'error' };
   }
 };
 
@@ -62,8 +68,13 @@ const getUserSessions = async (ctx) => {
       return user.session;
     })
     .then((res) => {
-      ctx.body = res;
-      ctx.status = 200;
+      if(res) {
+        ctx.body = res;
+        ctx.status = 200;
+      } else {
+        ctx.status = 404;
+        ctx.body = { status: 'error' };
+      }
     });
 };
 
@@ -86,8 +97,13 @@ const getUserTrophies = async (ctx) => {
       return Trophy.find({ _id: user.trophies });
     })
     .then((res) => {
-      ctx.body = res;
-      ctx.status = 200;
+      if(res) {
+        ctx.body = res;
+        ctx.status = 200;
+      } else {
+        ctx.status = 404;
+        ctx.body = { status: 'error' };
+      }
     });
 };
 

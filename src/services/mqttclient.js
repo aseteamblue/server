@@ -38,9 +38,23 @@ const mqttclient = () =>{
       // test if a session exist with the thingy
       if(!receive.get(thingyURI) && value === 'pressed') {
         data.startSession(sessions, thingyURI);
+        // change LED color to blue
+        client.publish(
+          thingyURI + '/' + thingy.characteristics.led.serviceUUID
+          + '/' + thingy.characteristics.led.characteristicUUID
+          + '/write',
+          Buffer.from('010000FF', 'hex')
+        );
       }else if(receive.get(thingyURI) && value === 'pressed') {
         data.stopSession(sessions.get(thingyURI));
         sessions.set(thingyURI, null);
+        // change LED color to red
+        client.publish(
+          thingyURI + '/' + thingy.characteristics.led.serviceUUID
+          + '/' + thingy.characteristics.led.characteristicUUID
+          + '/write',
+          Buffer.from('01FF0000', 'hex')
+        );
       }
 
       if (message[0] === 0x0) { receive.set(thingyURI, !receive.get(thingyURI)); }
@@ -74,7 +88,7 @@ const mqttclient = () =>{
         // GPS
         let value = JSON.parse(message);
         logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> GPS: ' + value.latitude + ', ' + value.longitude);
-        data.addRaw(thingyURI, sessionID, 'gps', value.latitude + '/' + value.longitude);
+        data.addRaw(thingyURI, sessionID, 'gps', { 'lat': value.latitude, 'lng': value.longitude });
       }
     }
   });

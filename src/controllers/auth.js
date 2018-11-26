@@ -77,7 +77,18 @@ const register = async (ctx) => {
     });
 };
 
+const refresh = (ctx) => {
+  if (ctx.req.user != null) {
+    const token = issue({ id: ctx.req.user.id });
+    ctx.body = token;
+    ctx.status = 200;
+    return;
+  }
+  ctx.status = 401;
+};
+
 export default {
   login,
-  register
+  register,
+  refresh
 };

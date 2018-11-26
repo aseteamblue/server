@@ -18,6 +18,9 @@ const getTrophies = async (ctx) => {
   if (trophies) {
     ctx.body = trophies;
     ctx.status = 200;
+  } else {
+    ctx.status = 404;
+    ctx.body = { status: 'error' };
   }
 };
 
@@ -45,6 +48,9 @@ const getTrophyByID = async (ctx) => {
   if (trophy) {
     ctx.body = trophy;
     ctx.status = 200;
+  } else {
+    ctx.status = 404;
+    ctx.body = { status: 'error' };
   }
 };
 

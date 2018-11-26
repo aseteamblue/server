@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const SessionSchema = new Schema({
-  'id': { type: String },
   'title': { type: String, default: '' },
   'type': { type: Boolean, default: true },
   'share': { type: Boolean, default: false },
@@ -16,7 +15,7 @@ const SessionSchema = new Schema({
   'averageTVOC': { type: Number, default: 0 },
   'duration': { type: Number, default: 0 },
   'dateStart': { type: Date, default: Date.now },
-  'dateEnd': { type: Date, default: Date.now },
+  'dateEnd': { type: Date },
   'active': { type: Boolean, default: true }
 });
 
