@@ -29,6 +29,18 @@ const proximity = async (gps, thingyURI, client) => {
             + '/write',
             Buffer.from('0100b903', 'hex')
           );
+          client.publish(
+            thingyURI + '/' + thingy.characteristics.speakerconfig.serviceUUID
+            + '/' + thingy.characteristics.speakerconfig.characteristicUUID
+            + '/write',
+            Buffer.from('0301', 'hex')
+          );
+          client.publish(
+            thingyURI + '/' + thingy.characteristics.speakerdata.serviceUUID
+            + '/' + thingy.characteristics.speakerdata.characteristicUUID
+            + '/write',
+            Buffer.from('01', 'hex')
+          );
           await sleep(1000);
           // change color to blue
           client.publish(
