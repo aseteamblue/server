@@ -5,15 +5,16 @@ import haversine from 'haversine';
 import thingy from '../config/thingy.js';
 
 // max distance for detection in km
-const maxDist = 0.1;
+const maxDist = 0.01;
 
 const proximity = async (gps, thingyURI, client) => {
+  let gpsInfo = gps.get(thingyURI);
   for (let entries of gps.entries()) {
     if(entries[1] !== null) {
       if(entries[0] !== thingyURI) {
         const start = {
-          latitude: gps.get(thingyURI).lat,
-          longitude: gps.get(thingyURI).lng
+          latitude: gpsInfo.lat,
+          longitude: gpsInfo.lng
         };
         const stop = {
           latitude: entries[1].lat,
@@ -29,18 +30,7 @@ const proximity = async (gps, thingyURI, client) => {
             + '/write',
             Buffer.from('0100b903', 'hex')
           );
-          client.publish(
-            thingyURI + '/' + thingy.characteristics.speakerconfig.serviceUUID
-            + '/' + thingy.characteristics.speakerconfig.characteristicUUID
-            + '/write',
-            Buffer.from('0301', 'hex')
-          );
-          client.publish(
-            thingyURI + '/' + thingy.characteristics.speakerdata.serviceUUID
-            + '/' + thingy.characteristics.speakerdata.characteristicUUID
-            + '/write',
-            Buffer.from('01', 'hex')
-          );
+          soundPlayer(client, thingyURI);
           await sleep(1000);
           // change color to blue
           client.publish(
@@ -54,6 +44,21 @@ const proximity = async (gps, thingyURI, client) => {
     }
   }
 };
+
+function soundPlayer(client, thingyURI) {
+  client.publish(
+    thingyURI + '/' + thingy.characteristics.speakerconfig.serviceUUID
+    + '/' + thingy.characteristics.speakerconfig.characteristicUUID
+    + '/write',
+    Buffer.from('0301', 'hex')
+  );
+  client.publish(
+    thingyURI + '/' + thingy.characteristics.speakerdata.serviceUUID
+    + '/' + thingy.characteristics.speakerdata.characteristicUUID
+    + '/write',
+    Buffer.from('01', 'hex')
+  );
+}
 
 function sleep(ms) {
   return new Promise(resolve=>{
