@@ -6,6 +6,7 @@ import logger from '../logger';
 import thingy from '../config/thingy.js';
 
 import data from './dataManager';
+import proximity from './proximity';
 
 const mqttclient = () =>{
   // Connect to the MQTT broker
@@ -24,6 +25,8 @@ const mqttclient = () =>{
   // Do a link with thingy and session
   let sessions = new Map();
 
+  let gps = new Map();
+
   client.on('message', (topic, message) => {
     let thingyURI = topic.substr(0, topic.indexOf('/'));
     if(!receive.has(thingyURI)) {
@@ -37,7 +40,10 @@ const mqttclient = () =>{
 
       // test if a session exist with the thingy
       if(!receive.get(thingyURI) && value === 'pressed') {
+        // create a new session
         data.startSession(sessions, thingyURI);
+        // put the session in the proximity tester
+        gps.set(thingyURI, null);
         // change LED color to blue
         client.publish(
           thingyURI + '/' + thingy.characteristics.led.serviceUUID
@@ -46,8 +52,11 @@ const mqttclient = () =>{
           Buffer.from('010000FF', 'hex')
         );
       }else if(receive.get(thingyURI) && value === 'pressed') {
+        // stop the session
         data.stopSession(sessions.get(thingyURI));
         sessions.set(thingyURI, null);
+        // remove the session from the proximity tester
+        gps.delete(thingyURI);
         // change LED color to red
         client.publish(
           thingyURI + '/' + thingy.characteristics.led.serviceUUID
@@ -89,6 +98,8 @@ const mqttclient = () =>{
         let value = JSON.parse(message);
         logger.info({ event: 'mqtt' }, 'Thingy ' + thingyURI + ' -> GPS: ' + value.latitude + ', ' + value.longitude);
         data.addRaw(thingyURI, sessionID, 'gps', { 'lat': value.latitude, 'lng': value.longitude });
+        gps.set(thingyURI, { 'lat': value.latitude, 'lng': value.longitude });
+        proximity(gps, thingyURI, client);
       }
     }
   });
