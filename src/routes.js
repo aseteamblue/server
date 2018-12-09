@@ -16,6 +16,7 @@ router.get('/users', requireAuth, UserController.getUsers);
 router.get('/user', requireAuth, UserController.getUserByID);
 router.get('/user/sessions', requireAuth, UserController.getUserSessions);
 router.get('/user/trophies', requireAuth, UserController.getUserTrophies);
+router.post('/sessions', requireAuth, SessionController.postSession);
 router.get('/sessions', requireAuth, SessionController.getSessions);
 router.get('/sessions/:sessionID', requireAuth, SessionController.getSessionByID);
 router.get('/sessions/:sessionID/temperatures', requireAuth, SessionController.getSessionTemperatures);

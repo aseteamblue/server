@@ -3,11 +3,38 @@ import Session from '../models/session';
 import Thingy from '../models/thingy';
 import configThingy from '../config/thingy';
 import User from '../models/user';
+import data from '../services/dataManager';
+import logger from '../logger';
 
 /**
  * @swagger
  * /:
  *   post:
+ *     tags:
+ *       - Public
+ *     summary: Get all the user's sessions or public sessions from the database.
+ *     operationId: getSessions
+ *     responses:
+ *       200:
+ *         description: List of sessions.
+ */
+const postSession = async (ctx) => {
+  let params = ctx.request.body;
+  logger.info({ event: 'session' }, params);
+  let session = await data.createStaticSession(params);
+  if(session) {
+    ctx.body = session;
+    ctx.status = 200;
+  } else {
+    ctx.body = { status: 'error' };
+    ctx.status = 404;
+  }
+};
+
+/**
+ * @swagger
+ * /:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get all the user's sessions or public sessions from the database.
@@ -31,7 +58,7 @@ const getSessions = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the session corresponding to the given ID. Has to be a public session or one of the user's sessions.
@@ -75,7 +102,7 @@ const getSessionByID = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the temperatures corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -127,7 +154,7 @@ const getSessionTemperatures = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the humidities corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -179,7 +206,7 @@ const getSessionHumidities = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the gas values corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -231,7 +258,7 @@ const getSessionCO2 = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the gps values corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -283,7 +310,7 @@ const getSessionGPS = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the average values corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -341,6 +368,7 @@ const getSessionAverageValues = async (ctx) => {
 };
 
 export default{
+  postSession,
   getSessions,
   getSessionByID,
   getSessionTemperatures,

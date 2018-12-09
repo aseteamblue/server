@@ -48,6 +48,20 @@ class dataManager {
     return newSession._id;
   }
 
+  static async createStaticSession(params) {
+    let newSession = new global.SessionSchema({
+      _id: mongoose.Types.ObjectId(),
+      type: true,
+      active: false,
+      title: params.title,
+      dateStart: params.startDate,
+      dateEnd: params.endDate,
+      share: params.share
+    });
+    newSession.save();
+    return newSession;
+  }
+
   static async stopSession(sessionId) {
     logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' finished');
 
