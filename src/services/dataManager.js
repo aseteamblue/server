@@ -48,7 +48,10 @@ class dataManager {
     return newSession._id;
   }
 
-  static async createStaticSession(params) {
+  static async createStaticSession(params, userID) {
+    let duration = new Date(params.endDate).getTime() - new Date(params.startDate).getTime();
+    let hours = duration / (1000 * 60 * 60);
+
     let newSession = new global.SessionSchema({
       _id: mongoose.Types.ObjectId(),
       type: true,
@@ -56,9 +59,15 @@ class dataManager {
       title: params.title,
       dateStart: params.startDate,
       dateEnd: params.endDate,
-      share: params.share
+      share: params.share,
+      totalDistance: (params.totalDistance) ? params.totalDistance : 0,
+      averageSpeed: (params.totalDistance) ? params.totalDistance / hours : 0,
+      duration: duration
     });
+    let user = await global.UserSchema.findOne({ _id: userID }).exec();
     newSession.save();
+    user.session.push(newSession._id);
+    user.save();
     return newSession;
   }
 

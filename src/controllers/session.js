@@ -4,7 +4,6 @@ import Thingy from '../models/thingy';
 import configThingy from '../config/thingy';
 import User from '../models/user';
 import data from '../services/dataManager';
-import logger from '../logger';
 
 /**
  * @swagger
@@ -19,16 +18,16 @@ import logger from '../logger';
  *         description: List of sessions.
  */
 const postSession = async (ctx) => {
-  let params = ctx.request.body;
-  logger.info({ event: 'session' }, params);
-  let session = await data.createStaticSession(params);
-  if(session) {
-    ctx.body = session;
-    ctx.status = 200;
-  } else {
-    ctx.body = { status: 'error' };
-    ctx.status = 404;
-  }
+ let params = ctx.request.body;
+ let userID = ctx.req.user.id;
+ let session = await data.createStaticSession(params, userID);
+ if(session) {
+   ctx.body = session;
+   ctx.status = 200;
+ } else {
+   ctx.body = { status: 'error' };
+   ctx.status = 404;
+ }
 };
 
 /**
