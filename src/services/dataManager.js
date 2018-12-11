@@ -4,6 +4,7 @@ import haversine from 'haversine';
 import '../models/session';
 import '../models/thingy';
 import '../models/user';
+import throphies from './trophies';
 
 import logger from '../logger';
 import configThingy from '../config/thingy';
@@ -71,12 +72,13 @@ class dataManager {
     return newSession;
   }
 
-  static async stopSession(sessionId) {
+  static async stopSession(sessionId, thingyId) {
     logger.info({ event: 'datamanager' }, 'Session ' + sessionId + ' finished');
 
     let session = await global.SessionSchema.findOne({ _id: sessionId }).exec();
 
-    let gps = await global.ThingySchema.find({ session_id: sessionId, message_type: 'gps' }).sort({ date: 1 }).exec();
+    let gps = await global.ThingySchema.find({ session_id: sessionId, message_type: 'gps' }).sort({ date: 1 })
+      .exec();
     let humidity = await global.ThingySchema.find({ session_id: sessionId, message_type: configThingy.characteristics.humidity.characteristicUUID }).exec();
     let temperature = await global.ThingySchema.find({ session_id: sessionId, message_type: configThingy.characteristics.temperature.characteristicUUID }).exec();
 
@@ -126,6 +128,14 @@ class dataManager {
       session.averageSpeed = km / hours;
 
       session.save();
+
+      let user = await global.UserSchema.findOne({ thingyUri: thingyId }).exec();
+
+      if(user) {
+        user.totalDistance += session.totalDistance;
+        user.totalTime += session.duration;
+        await throphies(user);
+      }
     }
   }
 }

@@ -53,7 +53,7 @@ const mqttclient = () =>{
         );
       }else if(receive.get(thingyURI) && value === 'pressed') {
         // stop the session
-        data.stopSession(sessions.get(thingyURI));
+        data.stopSession(sessions.get(thingyURI), thingyURI);
         sessions.set(thingyURI, null);
         // remove the session from the proximity tester
         gps.delete(thingyURI);

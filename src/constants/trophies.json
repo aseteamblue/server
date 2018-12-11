@@ -1,0 +1,98 @@
+[
+  {
+    "type": true,
+    "description": "1 Km",
+    "key": "totalDistance",
+    "value": 1
+  },
+  {
+    "type": true,
+    "description": "5 Km",
+    "key": "totalDistance",
+    "value": 5
+  },
+  {
+    "type": true,
+    "description": "10 Km",
+    "key": "totalDistance",
+    "value": 10
+  },
+  {
+    "type": true,
+    "description": "20 Km",
+    "key": "totalDistance",
+    "value": 20
+  },
+  {
+    "type": true,
+    "description": "35 Km",
+    "key": "totalDistance",
+    "value": 35
+  },
+  {
+    "type": true,
+    "description": "50 Km",
+    "key": "totalDistance",
+    "value": 50
+  },
+  {
+    "type": true,
+    "description": "75 Km",
+    "key": "totalDistance",
+    "value": 75
+  },
+  {
+    "type": true,
+    "description": "100 Km",
+    "key": "totalDistance",
+    "value": 100
+  },
+  {
+    "type": true,
+    "description": "First run",
+    "key": "session",
+    "value": 1
+  },
+  {
+    "type": true,
+    "description": "5 run",
+    "key": "session",
+    "value": 5
+  },
+  {
+    "type": true,
+    "description": "10 run",
+    "key": "session",
+    "value": 10
+  },
+  {
+    "type": true,
+    "description": "25 run",
+    "key": "session",
+    "value": 25
+  },
+  {
+    "type": true,
+    "description": "1 h",
+    "key": "totalTime",
+    "value": 3600000
+  },
+  {
+    "type": true,
+    "description": "2 h",
+    "key": "totalTime",
+    "value": 7200000
+  },
+  {
+    "type": true,
+    "description": "5 h",
+    "key": "totalTime",
+    "value": 18000000
+  },
+  {
+    "type": true,
+    "description": "10 h",
+    "key": "totalTime",
+    "value": 36000000
+  }
+]
