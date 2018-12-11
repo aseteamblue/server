@@ -80,19 +80,19 @@
   {
     "type": true,
     "description": "2 h",
-    "key": "session",
+    "key": "totalTime",
     "value": 7200000
   },
   {
     "type": true,
     "description": "5 h",
-    "key": "session",
+    "key": "totalTime",
     "value": 18000000
   },
   {
     "type": true,
     "description": "10 h",
-    "key": "session",
+    "key": "totalTime",
     "value": 36000000
   }
 ]

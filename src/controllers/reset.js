@@ -5,8 +5,8 @@ import '../models/user';
 import '../models/trophy';
 import zenio from 'zenio';
 import fs from 'fs';
+import path from 'path';
 
-import logger from '../logger';
 /**
  * @swagger
  * /:
@@ -34,8 +34,8 @@ const reset = async (ctx) => {
   ctx.status = 200;
 };
 
-const trophies = async (ctx) => {
-  let json = JSON.parse(fs.readFileSync(__dirname+'/../constants/trophies.json','utf8'));
+const trophies = async () => {
+  let json = JSON.parse(fs.readFileSync(path.join(__dirname, '../constants/trophies.json'), 'utf8'));
   let max = json.length;
   for (let i = 0; i < max; i++) {
     let newTrophy = new global.TrophySchema({

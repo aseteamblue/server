@@ -10,8 +10,8 @@ const UserSchema = new Schema({
   'password': { type: String },
   'totalDistanceJogging': { type: Number },
   'totalDistanceBicycle': { type: Number },
-  'totalDistance': { type: Number },
-  'totalTime': { type: Number },
+  'totalDistance': { type: Number, default: 0 },
+  'totalTime': { type: Number, default: 0 },
   'session': [{ type: String }],
   'trophies': [{ type: String }]
 
