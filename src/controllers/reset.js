@@ -2,7 +2,11 @@ import config from '../config';
 import '../models/session';
 import '../models/thingy';
 import '../models/user';
+import '../models/trophy';
 import zenio from 'zenio';
+import fs from 'fs';
+
+import logger from '../logger';
 /**
  * @swagger
  * /:
@@ -20,6 +24,9 @@ const reset = async (ctx) => {
   await global.ThingySchema.deleteMany({});
   await global.SessionSchema.deleteMany({});
   await global.TrophySchema.deleteMany({});
+
+  await trophies();
+
   for(let i = 1; i <= 3; i++) {
     await zenio.get(`${config.host}:${config.port}/auth/register?username=test${i}&thingy=blue0${i}`);
   }
@@ -28,7 +35,18 @@ const reset = async (ctx) => {
 };
 
 const trophies = async (ctx) => {
-  
+  let json = JSON.parse(fs.readFileSync(__dirname+'/../constants/trophies.json','utf8'));
+  let max = json.length;
+  for (let i = 0; i < max; i++) {
+    let newTrophy = new global.TrophySchema({
+      type: json[i].type,
+      description: json[i].description,
+      key: json[i].key,
+      value: json[i].value
+    });
+
+    newTrophy.save();
+  }
 };
 
 export default {
