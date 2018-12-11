@@ -27,6 +27,10 @@ const reset = async (ctx) => {
   ctx.status = 200;
 };
 
+const trophies = async (ctx) => {
+  
+};
+
 export default {
   reset
 };
