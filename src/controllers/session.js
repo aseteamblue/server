@@ -18,16 +18,16 @@ import data from '../services/dataManager';
  *         description: List of sessions.
  */
 const postSession = async (ctx) => {
- let params = ctx.request.body;
- let userID = ctx.req.user.id;
- let session = await data.createStaticSession(params, userID);
- if(session) {
-   ctx.body = session;
-   ctx.status = 200;
- } else {
-   ctx.body = { status: 'error' };
-   ctx.status = 404;
- }
+  let params = ctx.request.body;
+  let userID = ctx.req.user.id;
+  let session = await data.createStaticSession(params, userID);
+  if(session) {
+    ctx.body = session;
+    ctx.status = 200;
+  } else {
+    ctx.body = { status: 'error' };
+    ctx.status = 404;
+  }
 };
 
 /**
@@ -366,6 +366,41 @@ const getSessionAverageValues = async (ctx) => {
   }
 };
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     tags:
+ *       - Public
+ *     summary: Toggle the privacy of a session
+ *     operationId: changePrivacy
+ *     responses:
+ *       200:
+ *         description: Speed, Temperature, Humidity, eCO2, TVOC.
+ */
+const changePrivacy = async (ctx) => {
+  const sessionID = ctx.params.sessionID;
+  if (sessionID == null) {
+    ctx.body = {
+      msg: 'No field sessionID'
+    };
+    ctx.status = 400;
+  }
+  let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
+  if(userSessions.session.includes(sessionID)) {
+    // user change the privacy of one of his session
+    let res = await Session.findOne({ _id: sessionID });
+    if (res) {
+      res.share = !res.share;
+      await res.save();
+      ctx.status = 200;
+    } else {
+      ctx.status = 404;
+      ctx.body = { status: 'error' };
+    }
+  }
+};
+
 export default{
   postSession,
   getSessions,
@@ -374,5 +409,6 @@ export default{
   getSessionHumidities,
   getSessionCO2,
   getSessionGPS,
-  getSessionAverageValues
+  getSessionAverageValues,
+  changePrivacy
 };

@@ -19,6 +19,7 @@ router.get('/user/trophies', requireAuth, UserController.getUserTrophies);
 router.post('/sessions', requireAuth, SessionController.postSession);
 router.get('/sessions', requireAuth, SessionController.getSessions);
 router.get('/sessions/:sessionID', requireAuth, SessionController.getSessionByID);
+router.get('/sessions/:sessionID/privacy', requireAuth, SessionController.changePrivacy);
 router.get('/sessions/:sessionID/temperatures', requireAuth, SessionController.getSessionTemperatures);
 router.get('/sessions/:sessionID/humidities', requireAuth, SessionController.getSessionHumidities);
 router.get('/sessions/:sessionID/co2', requireAuth, SessionController.getSessionCO2);
