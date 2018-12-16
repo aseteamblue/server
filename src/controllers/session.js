@@ -44,7 +44,7 @@ const postSession = async (ctx) => {
  */
 const getSessions = async (ctx) => {
   let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
-  let sessions = await Session.find({ $or: [{ _id: { $in: userSessions.session } }, { share: true }] });
+  let sessions = await Session.find({ $or: [{ _id: { $in: userSessions.session } }, { share: true }] }, { sort: { dateStart: -1 } }).exec();
   if(sessions) {
     ctx.body = sessions;
     ctx.status = 200;
