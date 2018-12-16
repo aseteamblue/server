@@ -3,6 +3,7 @@ import Session from '../models/session';
 import Thingy from '../models/thingy';
 import configThingy from '../config/thingy';
 import User from '../models/user';
+import data from '../services/dataManager';
 
 /**
  * @swagger
@@ -16,9 +17,34 @@ import User from '../models/user';
  *       200:
  *         description: List of sessions.
  */
+const postSession = async (ctx) => {
+  let params = ctx.request.body;
+  let userID = ctx.req.user.id;
+  let session = await data.createStaticSession(params, userID);
+  if(session) {
+    ctx.body = session;
+    ctx.status = 200;
+  } else {
+    ctx.body = { status: 'error' };
+    ctx.status = 404;
+  }
+};
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     tags:
+ *       - Public
+ *     summary: Get all the user's sessions or public sessions from the database.
+ *     operationId: getSessions
+ *     responses:
+ *       200:
+ *         description: List of sessions.
+ */
 const getSessions = async (ctx) => {
   let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
-  let sessions = await Session.find({ $or: [{ _id: { $in: userSessions.session } }, { share: true }] });
+  let sessions = await Session.find({ $or: [{ _id: { $in: userSessions.session } }, { share: true }] }, { sort: { dateStart: -1 } }).exec();
   if(sessions) {
     ctx.body = sessions;
     ctx.status = 200;
@@ -31,7 +57,7 @@ const getSessions = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the session corresponding to the given ID. Has to be a public session or one of the user's sessions.
@@ -75,7 +101,7 @@ const getSessionByID = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the temperatures corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -127,7 +153,7 @@ const getSessionTemperatures = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the humidities corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -179,7 +205,7 @@ const getSessionHumidities = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the gas values corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -231,7 +257,7 @@ const getSessionCO2 = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the gps values corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -283,7 +309,7 @@ const getSessionGPS = async (ctx) => {
 /**
  * @swagger
  * /:
- *   post:
+ *   get:
  *     tags:
  *       - Public
  *     summary: Get the average values corresponding to a given session. Has to be a public session or one of the user's sessions.
@@ -340,12 +366,49 @@ const getSessionAverageValues = async (ctx) => {
   }
 };
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     tags:
+ *       - Public
+ *     summary: Toggle the privacy of a session
+ *     operationId: changePrivacy
+ *     responses:
+ *       200:
+ *         description: Speed, Temperature, Humidity, eCO2, TVOC.
+ */
+const changePrivacy = async (ctx) => {
+  const sessionID = ctx.params.sessionID;
+  if (sessionID == null) {
+    ctx.body = {
+      msg: 'No field sessionID'
+    };
+    ctx.status = 400;
+  }
+  let userSessions = await User.findOne({ _id: ctx.req.user.id }, 'session');
+  if(userSessions.session.includes(sessionID)) {
+    // user change the privacy of one of his session
+    let res = await Session.findOne({ _id: sessionID });
+    if (res) {
+      res.share = !res.share;
+      await res.save();
+      ctx.status = 200;
+    } else {
+      ctx.status = 404;
+      ctx.body = { status: 'error' };
+    }
+  }
+};
+
 export default{
+  postSession,
   getSessions,
   getSessionByID,
   getSessionTemperatures,
   getSessionHumidities,
   getSessionCO2,
   getSessionGPS,
-  getSessionAverageValues
+  getSessionAverageValues,
+  changePrivacy
 };
